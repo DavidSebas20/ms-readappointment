@@ -1,4 +1,4 @@
-package entity;
+package com.example.readappointment.entity;
 
 import jakarta.persistence.*;
 import java.time.LocalDate;
