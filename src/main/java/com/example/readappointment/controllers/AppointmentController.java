@@ -1,7 +1,7 @@
 package com.example.readappointment.controllers;
 
 import com.example.readappointment.entity.Appointment;
-import com.example.readappointment.Repository.AppointmentRepository;
+import com.example.readappointment.service.AppointmentService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -10,21 +10,19 @@ import java.util.List;
 @RequestMapping("/appointments")
 public class AppointmentController {
 
-    private final AppointmentRepository appointmentRepository;
+    private final AppointmentService appointmentService;
 
-    public AppointmentController(AppointmentRepository appointmentRepository) {
-        this.appointmentRepository = appointmentRepository;
+    public AppointmentController(AppointmentService appointmentService) {
+        this.appointmentService = appointmentService;
     }
 
-    // Buscar citas por ID de paciente
     @GetMapping("/patient/{patientId}")
     public List<Appointment> getAppointmentsByPatient(@PathVariable Long patientId) {
-        return appointmentRepository.findByPatientId(patientId);
+        return appointmentService.getAppointmentsByPatient(patientId);
     }
 
-    // Buscar citas por ID de doctor
     @GetMapping("/doctor/{doctorId}")
     public List<Appointment> getAppointmentsByDoctor(@PathVariable Long doctorId) {
-        return appointmentRepository.findByDoctorId(doctorId);
+        return appointmentService.getAppointmentsByDoctor(doctorId);
     }
 }
