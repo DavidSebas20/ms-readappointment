@@ -3,6 +3,7 @@ package com.example.readappointment.controllers;
 import com.example.readappointment.entity.Appointment;
 import com.example.readappointment.service.AppointmentService;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,10 +13,17 @@ import java.util.List;
 @RequestMapping("/read-appointment/appointments")
 public class AppointmentController {
 
+    @Autowired
     private final AppointmentService appointmentService;
 
     public AppointmentController(AppointmentService appointmentService) {
         this.appointmentService = appointmentService;
+    }
+
+    @GetMapping
+    public ResponseEntity<List<Appointment>> getAllAppointments() {
+        List<Appointment> appointments = appointmentService.getAllAppointments();
+        return ResponseEntity.ok(appointments);
     }
 
     @GetMapping("/patient/{patientId}")

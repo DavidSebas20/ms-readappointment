@@ -9,25 +9,35 @@ import java.time.LocalTime;
 public class Appointment {
 
     @Id
-    private Long id; // No se autogenera, ya que solo leemos datos
+    @GeneratedValue(strategy = GenerationType.IDENTITY) // ID autogenerado
+    private Long id;
 
-    @Column(name = "patient_id", nullable = false)
+    @Column(name = "patient_id", nullable = false) // ID del paciente
     private Long patientId;
 
-    @Column(name = "doctor_id", nullable = false)
+    @Column(name = "doctor_id", nullable = false) // ID del doctor
     private Long doctorId;
 
-    @Column(name = "appointment_date", nullable = false)
+    @Column(name = "appointment_date", nullable = false) // Fecha de la cita
     private LocalDate appointmentDate;
 
-    @Column(name = "appointment_time", nullable = false)
+    @Column(name = "appointment_time", nullable = false) // Hora de la cita
     private LocalTime appointmentTime;
 
-    @Column(nullable = false)
+    @Column(nullable = false) // Estado de la cita
     private String status;
 
-    // Constructor vacío requerido por JPA
+    // Constructor vacío (requerido por JPA)
     public Appointment() {}
+
+    // Constructor con parámetros
+    public Appointment(Long patientId, Long doctorId, LocalDate appointmentDate, LocalTime appointmentTime, String status) {
+        this.patientId = patientId;
+        this.doctorId = doctorId;
+        this.appointmentDate = appointmentDate;
+        this.appointmentTime = appointmentTime;
+        this.status = status;
+    }
 
     // Getters y Setters
     public Long getId() {
