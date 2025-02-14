@@ -2,7 +2,6 @@ package com.example.readappointment.controllers;
 
 import com.example.readappointment.entity.Appointment;
 import com.example.readappointment.service.AppointmentService;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -10,35 +9,36 @@ import org.springframework.web.bind.annotation.*;
 import java.util.List;
 
 @RestController
-@RequestMapping("/read-appointment/appointments")
+@RequestMapping("/read-appointments/appointments")
 public class AppointmentController {
 
     @Autowired
-    private final AppointmentService appointmentService;
+    private AppointmentService appointmentService;
 
-    public AppointmentController(AppointmentService appointmentService) {
-        this.appointmentService = appointmentService;
-    }
-
+    // Obtener todas las citas
     @GetMapping
     public ResponseEntity<List<Appointment>> getAllAppointments() {
         List<Appointment> appointments = appointmentService.getAllAppointments();
         return ResponseEntity.ok(appointments);
     }
 
+    // Obtener citas por ID de paciente
     @GetMapping("/patient/{patientId}")
-    public List<Appointment> getAppointmentsByPatient(@PathVariable Long patientId) {
-        return appointmentService.getAppointmentsByPatient(patientId);
+    public ResponseEntity<List<Appointment>> getAppointmentsByPatientId(@PathVariable Long patientId) {
+        List<Appointment> appointments = appointmentService.getAppointmentsByPatientId(patientId);
+        return ResponseEntity.ok(appointments);
     }
 
+    // Obtener citas por ID de doctor
     @GetMapping("/doctor/{doctorId}")
-    public List<Appointment> getAppointmentsByDoctor(@PathVariable Long doctorId) {
-        return appointmentService.getAppointmentsByDoctor(doctorId);
+    public ResponseEntity<List<Appointment>> getAppointmentsByDoctorId(@PathVariable Long doctorId) {
+        List<Appointment> appointments = appointmentService.getAppointmentsByDoctorId(doctorId);
+        return ResponseEntity.ok(appointments);
     }
 
+    // Health check
     @GetMapping("/health")
     public ResponseEntity<String> healthCheck() {
         return ResponseEntity.ok("Healthy");
     }
-
 }
